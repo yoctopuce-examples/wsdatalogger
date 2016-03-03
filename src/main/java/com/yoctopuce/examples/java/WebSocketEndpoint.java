@@ -6,22 +6,22 @@ import javax.websocket.Session;
 import javax.websocket.server.ServerEndpoint;
 
 @ServerEndpoint("/callback")
-public class WebsocketCallback
+public class WebSocketEndpoint
 {
     @OnOpen
     public void onOpen(Session session)
     {
         System.out.println("WS Open " + session.getId());
-        Logic logic = Logic.get();
-        logic.AddHub(session);
+        WorkerThread wt = WorkerThread.getInstance();
+        wt.addSession(session);
     }
 
     @OnClose
     public void onClose(Session session)
     {
         System.out.println("WS Close " + session.getId());
-        Logic logic = Logic.get();
-        logic.RemoveHub(session);
+        WorkerThread wt = WorkerThread.getInstance();
+        wt.removeSession(session);
     }
 
 }
