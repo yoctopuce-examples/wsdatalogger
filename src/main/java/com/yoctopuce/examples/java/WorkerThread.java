@@ -224,7 +224,8 @@ public class WorkerThread implements Runnable, YAPI.DeviceArrivalCallback, YAPI.
             Iterator<String> iterator = _displays_hwid.iterator();
             while(iterator.hasNext()) {
                 String hwid = iterator.next();
-                _displays_hwid.remove(hwid);
+                if (hwid.startsWith(serialNumber))
+                    iterator.remove();
             }
         } catch (YAPI_Exception e) {
             e.printStackTrace();
