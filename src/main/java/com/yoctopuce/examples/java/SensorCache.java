@@ -87,14 +87,11 @@ public class SensorCache
         _min = _ysensor.get_lowestValue();
         _logicalName = _ysensor.get_logicalName();
 
-
         _cal.setTime(now);
         _cal.add(Calendar.HOUR_OF_DAY, 10);
         Date startTime = _cal.getTime();
         System.out.println("load from " + startTime.toString());
-        //fixme
         YDataSet dataset = _ysensor.get_recordedData(0, 0);
-        System.out.println("loading summary... ");
         dataset.loadMore();
         _summary = dataset.get_summary();
         int progress = 0;
