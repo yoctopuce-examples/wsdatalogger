@@ -6,7 +6,6 @@ import com.yoctopuce.YoctoAPI.YMeasure;
 import com.yoctopuce.YoctoAPI.YSensor;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 
 public class SensorCache
@@ -19,7 +18,6 @@ public class SensorCache
     String _unit;
     YMeasure _summary;
     ArrayList<YMeasure> _details;
-    private final Calendar _cal = Calendar.getInstance();
     private Date _timestamp = null;
     private String _logicalName;
 
@@ -87,11 +85,9 @@ public class SensorCache
         _min = _ysensor.get_lowestValue();
         _logicalName = _ysensor.get_logicalName();
 
-        _cal.setTime(now);
-        _cal.add(Calendar.HOUR_OF_DAY, 10);
-        Date startTime = _cal.getTime();
-        System.out.println("load from " + startTime.toString());
-        YDataSet dataset = _ysensor.get_recordedData(0, 0);
+        long from_time = (int) (now.getTime() / 1000) - 60 * 60 * 48;
+        System.out.printf("load from %d\n", from_time);
+        YDataSet dataset = _ysensor.get_recordedData(from_time, 0);
         dataset.loadMore();
         _summary = dataset.get_summary();
         int progress = 0;

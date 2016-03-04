@@ -134,13 +134,14 @@ public class WorkerThread implements Runnable, YAPI.DeviceArrivalCallback, YAPI.
         ArrayList<YMeasure> details = sensorCache.getDetails();
         if (details.size() > 0) {
             int max_x = width - 15;
-            layer2.moveTo(max_x, (int) Math.round((height / 2 - (details.get(0).get_averageValue() - middle) * 2)));
+            int max_idx = details.size() - 1;
+            layer2.moveTo(max_x, (int) Math.round((height / 2 - (details.get(max_idx--).get_averageValue() - middle) * 2)));
             int count = max_x;
             if (count > details.size()) {
                 count = details.size();
             }
-            for (int j = 1; j < count; j++) {
-                layer2.lineTo(max_x - j, (int) Math.round((height / 2 - (details.get(j).get_averageValue() - middle) * 2)));
+            for (int j = 1; j < count; j++ ) {
+                layer2.lineTo(max_x - j, (int) Math.round((height / 2 - (details.get(max_idx--).get_averageValue() - middle) * 2)));
             }
         }
         // if no data available since more than 15 minutes then there is a problem
@@ -222,7 +223,7 @@ public class WorkerThread implements Runnable, YAPI.DeviceArrivalCallback, YAPI.
 
             }
             Iterator<String> iterator = _displays_hwid.iterator();
-            while(iterator.hasNext()) {
+            while (iterator.hasNext()) {
                 String hwid = iterator.next();
                 if (hwid.startsWith(serialNumber))
                     iterator.remove();
