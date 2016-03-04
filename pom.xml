@@ -11,7 +11,7 @@
         <dependency>
             <groupId>com.yoctopuce.java</groupId>
             <artifactId>yoctolib-jee</artifactId>
-            <version>1.10.23384</version>
+            <version>1.10.23400</version>
         </dependency>
         <dependency>
             <groupId>javax.websocket</groupId>
